@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mata Uji UM UGM 2025</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 80%);
+            transform: rotate(30deg);
+            z-index: 1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .header-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo span {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-group {
+            margin-bottom: 15px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .filter-group select, .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .results-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .results-count {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .view-toggle button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: #777;
+        }
+        
+        .view-toggle button.active {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background-color: var(--light);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        tr:hover {
+            background-color: rgba(236, 240, 241, 0.5);
+        }
+        
+        .card-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .program-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .test-subjects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .test-subject {
+            background-color: var(--light);
+            color: var(--primary);
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 50px;
+        }
+        
+        .show-mobile {
+            display: none;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .pagination button.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        footer p {
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Hide some columns on smaller screens */
+        @media (max-width: 992px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .hide-tablet {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+            }
+            
+            .hide-mobile {
+                display: none;
+            }
+            
+            .show-mobile {
+                display: block;
+            }
+            
+            .header-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span>UGM</span>
+                </div>
+                <h1>Informasi Mata Uji UM UGM 2025</h1>
+                <p>Cari tahu mata uji yang diperlukan untuk program studi pilihan Anda di Ujian Mandiri UGM (CBT) Tahun 2025</p>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="filter-section">
+            <h2>Filter Program Studi</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="fakultas">Fakultas</label>
+                    <select id="fakultas">
+                        <option value="">Semua Fakultas</option>
+                        <!-- Akan diisi melalui JavaScript -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="prodi">Program Studi</label>
+                    <select id="prodi">
+                        <option value="">Semua Program Studi</option>
+                        <!-- Akan diisi melalui JavaScript -->
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="mata-uji">Mata Uji</label>
+                    <select id="mata-uji">
+                        <option value="">Semua Mata Uji</option>
+                        <option value="TPA">TPA</option>
+                        <option value="Bhs Indonesia">Bahasa Indonesia</option>
+                        <option value="Bhs Inggris">Bahasa Inggris</option>
+                        <option value="Mat Dasar">Matematika Dasar</option>
+                        <option value="Mat IPA">Matematika IPA</option>
+                        <option value="Biologi">Biologi</option>
+                        <option value="Kimia">Kimia</option>
+                        <option value="Fisika">Fisika</option>
+                        <option value="Sejarah">Sejarah</option>
+                        <option value="Ekonomi">Ekonomi</option>
+                        <option value="Sosiologi">Sosiologi</option>
+                        <option value="Geografi">Geografi</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="search">Pencarian</label>
+                    <input type="text" id="search" placeholder="Cari program studi...">
+                </div>
+            </div>
+            <div class="filter-buttons">
+                <button id="apply-filter" class="btn btn-primary">Terapkan Filter</button>
+                <button id="reset-filter" class="btn btn-outline">Reset</button>
+            </div>
+        </section>
+        
+        <section class="results-section">
+            <div class="results-header">
+                <div class="results-count" id="results-count">
+                    Menampilkan 0 program studi
+                </div>
+                <div class="view-toggle">
+                    <button id="table-view-btn" class="active"><i class="fas fa-table"></i> Tabel</button>
+                    <button id="card-view-btn"><i class="fas fa-th"></i> Kartu</button>
+                </div>
+            </div>
+            
+            <div id="table-view">
+                <div class="table-responsive">
+                    <table id="program-table">
+                        <thead>
+                            <tr>
+                                <th>Fakultas</th>
+                                <th>Program Studi</th>
+                                <th>Mata Uji</th>
+                            </tr>
+                        </thead>
+                        <tbody id="program-list">
+                            <!-- Akan diisi melalui JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div id="card-view" class="card-view" style="display: none">
+                <!-- Akan diisi melalui JavaScript -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Akan diisi melalui JavaScript -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 - Informasi Mata Uji UM UGM (Ujian Mandiri Universitas Gadjah Mada). Website ini dibuat sebagai referensi untuk calon mahasiswa yang akan mengikuti UM UGM CBT tahun 2025.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Data program studi dan mata uji
+        const programData = [
+            // Fakultas Biologi
+            { fakultas: "Biologi", prodi: "Biologi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Ekonomika dan Bisnis
+            { fakultas: "Ekonomika dan Bisnis", prodi: "Akuntansi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Ekonomika dan Bisnis", prodi: "Ilmu Ekonomi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Ekonomika dan Bisnis", prodi: "Manajemen", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            
+            // Fakultas Farmasi
+            { fakultas: "Farmasi", prodi: "Farmasi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Kimia", "Biologi"] },
+            
+            // Fakultas Filsafat
+            { fakultas: "Filsafat", prodi: "Filsafat", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            
+            // Fakultas Geografi
+            { fakultas: "Geografi", prodi: "Geografi Lingkungan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Geografi", "Sosiologi"] },
+            { fakultas: "Geografi", prodi: "Kartografi Dan Penginderaan Jauh", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Geografi", "Fisika"] },
+            { fakultas: "Geografi", prodi: "Pembangunan Wilayah", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Geografi", "Ekonomi"] },
+            
+            // Fakultas Hukum
+            { fakultas: "Hukum", prodi: "Hukum", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            
+            // Fakultas Ilmu Budaya
+            { fakultas: "Ilmu Budaya", prodi: "Antropologi Budaya", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Sejarah"] },
+            { fakultas: "Ilmu Budaya", prodi: "Arkeologi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Bahasa Dan Kebudayaan Jepang", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Bahasa Dan Kebudayaan Korea", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Bahasa Dan Sastra Indonesia", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Bahasa Dan Sastra Prancis", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Bahasa, Sastra, Dan Budaya Jawa", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Pariwisata", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sejarah"] },
+            { fakultas: "Ilmu Budaya", prodi: "Sastra Arab", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Sastra Inggris", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Ilmu Budaya", prodi: "Sejarah", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            
+            // Fakultas Ilmu Sosial dan Ilmu Politik
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Ilmu Hubungan Internasional", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Ilmu Komunikasi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Manajemen Dan Kebijakan Publik", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Pembangunan Sosial Dan Kesejahteraan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Politik dan Pemerintahan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Ilmu Sosial dan Ilmu Politik", prodi: "Sosiologi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            
+            // Fakultas Kedokteran Gigi
+            { fakultas: "Kedokteran Gigi", prodi: "Higiene Gigi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Kedokteran Gigi", prodi: "Kedokteran Gigi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Kedokteran Hewan
+            { fakultas: "Kedokteran Hewan", prodi: "Kedokteran Hewan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Kedokteran, Kesehatan Masyarakat, dan Keperawatan
+            { fakultas: "Kedokteran, Kesehatan Masyarakat, dan Keperawatan", prodi: "Gizi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Kedokteran, Kesehatan Masyarakat, dan Keperawatan", prodi: "Ilmu Keperawatan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Kedokteran, Kesehatan Masyarakat, dan Keperawatan", prodi: "Kedokteran", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Kehutanan
+            { fakultas: "Kehutanan", prodi: "Kehutanan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Matematika dan Ilmu Pengetahuan Alam
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Elektronika Dan Instrumentasi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Fisika", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Geofisika", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Ilmu Aktuaria", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Ilmu Komputer", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Kimia", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Kimia", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Matematika", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Matematika dan Ilmu Pengetahuan Alam", prodi: "Statistika", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            
+            // Fakultas Pertanian
+            { fakultas: "Pertanian", prodi: "Agronomi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Akuakultur", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Ekonomi Pertanian dan Agribisnis", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Pertanian", prodi: "Ilmu Tanah", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Manajemen Sumberdaya Akuatik", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Mikrobiologi Pertanian", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Penyuluhan dan Komunikasi Pertanian", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sosiologi", "Ekonomi"] },
+            { fakultas: "Pertanian", prodi: "Proteksi Tanaman", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Pertanian", prodi: "Teknologi Hasil Perikanan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Peternakan
+            { fakultas: "Peternakan", prodi: "Ilmu Dan Industri Peternakan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            
+            // Fakultas Psikologi
+            { fakultas: "Psikologi", prodi: "Psikologi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Sosiologi"] },
+            
+            // Fakultas Teknik
+            { fakultas: "Teknik", prodi: "Arsitektur", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Perencanaan Wilayah dan Kota", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Biomedis", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Elektro", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Fisika", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Geodesi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Geologi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Industri", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Infrastruktur Lingkungan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Kimia", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Kimia"] },
+            { fakultas: "Teknik", prodi: "Teknik Mesin", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Nuklir", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Sipil", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknologi Informasi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknik", prodi: "Teknik Sumber Daya Air", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            
+            // Fakultas Teknologi Pertanian
+            { fakultas: "Teknologi Pertanian", prodi: "Teknik Pertanian", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Teknologi Pertanian", prodi: "Teknologi Industri Pertanian", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Kimia", "Fisika"] },
+            { fakultas: "Teknologi Pertanian", prodi: "Teknologi Pangan Dan Hasil Pertanian", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Kimia", "Biologi"] },
+            
+            // Sekolah Vokasi
+            { fakultas: "Sekolah Vokasi", prodi: "Akuntansi Sektor Publik", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Bahasa Inggris", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Bisnis Perjalanan Wisata", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sejarah"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Manajemen dan Penilaian Properti", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Manajemen Informasi Kesehatan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Pembangunan Ekonomi Kewilayahan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Geografi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Pengelolaan Arsip dan Rekaman Informasi", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Pengelolaan Hutan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Pengembangan Produk Agroindustri", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Kimia", "Biologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Perbankan", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Ekonomi", "Sosiologi"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Sistem Informasi Geografis", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Geografi", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknik Pengelolaan dan Pemeliharaan Infrastruktur Sipil", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknik Pengelolaan Dan Perawatan Alat Berat", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Elektro", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Instrumentasi Dan Kontrol", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Internet", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Mesin", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Pelaksanaan Bangunan Sipil", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Rekayasa Perangkat Lunak", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Survei dan Pemetaan Dasar", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Mat IPA", "Fisika"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Teknologi Veteriner", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Biologi", "Kimia"] },
+            { fakultas: "Sekolah Vokasi", prodi: "Bahasa Jepang Untuk Komunikasi Bisnis dan Profesional", mataUji: ["TPA", "Bhs Indonesia", "Bhs Inggris", "Mat Dasar", "Sejarah", "Sosiologi"] },
+        ];
+        
+        // Variabel global untuk penyimpanan data dan pagination
+        let filteredData = [...programData];
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        let currentView = 'table'; // Default view adalah tabel
+        
+        // DOM Elements
+        const fakultasSelect = document.getElementById('fakultas');
+        const prodiSelect = document.getElementById('prodi');
+        const mataUjiSelect = document.getElementById('mata-uji');
+        const searchInput = document.getElementById('search');
+        const applyFilterBtn = document.getElementById('apply-filter');
+        const resetFilterBtn = document.getElementById('reset-filter');
+        const resultsCount = document.getElementById('results-count');
+        const programList = document.getElementById('program-list');
+        const cardView = document.getElementById('card-view');
+        const tableView = document.getElementById('table-view');
+        const tableViewBtn = document.getElementById('table-view-btn');
+        const cardViewBtn = document.getElementById('card-view-btn');
+        const paginationContainer = document.getElementById('pagination');
+        
+        // Mengisi dropdown fakultas
+        function populateFakultasDropdown() {
+            const fakultasSet = new Set(programData.map(item => item.fakultas));
+            const fakultasList = Array.from(fakultasSet).sort();
+            
+            fakultasList.forEach(fakultas => {
+                const option = document.createElement('option');
+                option.value = fakultas;
+                option.textContent = fakultas;
+                fakultasSelect.appendChild(option);
+            });
+        }
+        
+        // Mengisi dropdown prodi berdasarkan fakultas yang dipilih
+        function populateProdiDropdown(selectedFakultas = '') {
+            // Reset prodi dropdown
+            prodiSelect.innerHTML = '<option value="">Semua Program Studi</option>';
+            
+            // Filter prodi berdasarkan fakultas jika dipilih
+            let prodiList;
+            if (selectedFakultas) {
+                prodiList = programData
+                    .filter(item => item.fakultas === selectedFakultas)
+                    .map(item => item.prodi);
+            } else {
+                prodiList = programData.map(item => item.prodi);
+            }
+            
+            // Remove duplicates and sort
+            const uniqueProdiList = Array.from(new Set(prodiList)).sort();
+            
+            // Populate dropdown
+            uniqueProdiList.forEach(prodi => {
+                const option = document.createElement('option');
+                option.value = prodi;
+                option.textContent = prodi;
+                prodiSelect.appendChild(option);
+            });
+        }
+        
+        // Filter data berdasarkan kriteria yang dipilih
+        function filterData() {
+            const selectedFakultas = fakultasSelect.value;
+            const selectedProdi = prodiSelect.value;
+            const selectedMataUji = mataUjiSelect.value;
+            const searchText = searchInput.value.toLowerCase();
+            
+            filteredData = programData.filter(item => {
+                // Filter by fakultas
+                if (selectedFakultas && item.fakultas !== selectedFakultas) return false;
+                
+                // Filter by prodi
+                if (selectedProdi && item.prodi !== selectedProdi) return false;
+                
+                // Filter by mata uji
+                if (selectedMataUji && !item.mataUji.includes(selectedMataUji)) return false;
+                
+                // Filter by search text
+                if (searchText && !item.prodi.toLowerCase().includes(searchText) && 
+                    !item.fakultas.toLowerCase().includes(searchText)) return false;
+                
+                return true;
+            });
+            
+            // Reset pagination to first page
+            currentPage = 1;
+            
+            // Render data
+            renderData();
+            
+            // Update results count
+            updateResultsCount();
+        }
+        
+        // Update results count display
+        function updateResultsCount() {
+            const count = filteredData.length;
+            resultsCount.textContent = `Menampilkan ${count} program studi`;
+        }
+        
+        // Render data dengan pagination
+        function renderData() {
+            // Calculate pagination
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedData = filteredData.slice(start, end);
+            
+            // Clear previous data
+            programList.innerHTML = '';
+            cardView.innerHTML = '';
+            
+            // Render data based on current view
+            if (currentView === 'table') {
+                renderTableView(paginatedData);
+            } else {
+                renderCardView(paginatedData);
+            }
+            
+            // Update pagination
+            renderPagination();
+        }
+        
+        // Render data dalam tampilan tabel
+        function renderTableView(data) {
+            if (data.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="3" style="text-align: center;">Tidak ada program studi yang cocok dengan filter yang dipilih</td>`;
+                programList.appendChild(emptyRow);
+                return;
+            }
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${item.fakultas}</td>
+                    <td>${item.prodi}</td>
+                    <td>
+                        <div class="test-subjects">
+                            ${item.mataUji.map(subject => `<span class="test-subject">${subject}</span>`).join('')}
+                        </div>
+                    </td>
+                `;
+                
+                programList.appendChild(row);
+            });
+        }
+        
+        // Render data dalam tampilan kartu
+        function renderCardView(data) {
+            if (data.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.style.textAlign = 'center';
+                emptyMessage.style.gridColumn = '1 / -1';
+                emptyMessage.textContent = 'Tidak ada program studi yang cocok dengan filter yang dipilih';
+                cardView.appendChild(emptyMessage);
+                return;
+            }
+            
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'program-card';
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        ${item.prodi}
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Fakultas:</strong> ${item.fakultas}</p>
+                        <p><strong>Mata Uji:</strong></p>
+                        <div class="test-subjects">
+                            ${item.mataUji.map(subject => `<span class="test-subject">${subject}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                cardView.appendChild(card);
+            });
+        }
+        
+        // Render tombol pagination
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            
+            // If only one page, don't show pagination
+            if (totalPages <= 1) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&laquo;';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderData();
+                }
+            });
+            paginationContainer.appendChild(prevBtn);
+            
+            // Page buttons
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            
+            // Adjust if we're near the end
+            if (endPage - startPage < 4 && startPage > 1) {
+                startPage = Math.max(1, endPage - 4);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.textContent = i;
+                pageBtn.className = i === currentPage ? 'active' : '';
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderData();
+                });
+                paginationContainer.appendChild(pageBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '&raquo;';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderData();
+                }
+            });
+            paginationContainer.appendChild(nextBtn);
+        }
+        
+        // Toggle antara tampilan tabel dan kartu
+        tableViewBtn.addEventListener('click', () => {
+            if (currentView !== 'table') {
+                currentView = 'table';
+                tableView.style.display = 'block';
+                cardView.style.display = 'none';
+                
+                // Update active button
+                tableViewBtn.classList.add('active');
+                cardViewBtn.classList.remove('active');
+                
+                renderData();
+            }
+        });
+        
+        cardViewBtn.addEventListener('click', () => {
+            if (currentView !== 'card') {
+                currentView = 'card';
+                tableView.style.display = 'none';
+                cardView.style.display = 'grid';
+                
+                // Update active button
+                cardViewBtn.classList.add('active');
+                tableViewBtn.classList.remove('active');
+                
+                renderData();
+            }
+        });
+        
+        // Event listeners untuk filter
+        fakultasSelect.addEventListener('change', function() {
+            populateProdiDropdown(this.value);
+        });
+        
+        applyFilterBtn.addEventListener('click', filterData);
+        
+        resetFilterBtn.addEventListener('click', () => {
+            fakultasSelect.value = '';
+            populateProdiDropdown();
+            mataUjiSelect.value = '';
+            searchInput.value = '';
+            filteredData = [...programData];
+            currentPage = 1;
+            renderData();
+            updateResultsCount();
+        });
+        
+        // Inisialisasi
+        function init() {
+            populateFakultasDropdown();
+            populateProdiDropdown();
+            renderData();
+            updateResultsCount();
+        }
+        
+        // Search pada saat ketik (optional - uncomment jika ingin mengaktifkan)
+        // searchInput.addEventListener('input', filterData);
+        
+        // Inisialisasi ketika DOM sudah siap
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
